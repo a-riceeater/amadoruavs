@@ -17,7 +17,7 @@ def generateImage():
 
     image.save("vision.png")
 
-    # TODO: Center image + colors + shape + potentially add noise?
+    # TODO: Center image + colors + shape + rotate + position + potentially add noise?
 
 
 generateImage()
