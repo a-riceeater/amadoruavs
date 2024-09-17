@@ -36,8 +36,10 @@ def generateImage(shape, character, color):
         width, height = 200, 200
 
     elif shape == "quarter circle":
-        draw.pieslice((0, 0, 200, 200), start=270, end=360, fill=color)
-        width, height = 270, 100
+        rand = random.randint(0, 3)
+        if rand == 0:
+            draw.pieslice((0, 0, 200, 200), start=270, end=360, fill=color)
+            width, height = 270, 100
 
     elif shape == "pentagon":
         draw.regular_polygon((100, 100, 100), 5, fill=color)
