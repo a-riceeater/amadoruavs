@@ -47,8 +47,12 @@ def generateImage(shape, character, color):
         width, height = 200, 200
 
     elif shape == "semicircle":
-        draw.pieslice((0, 0, 200, 200), start=180, end=360, fill=color)
-        width, height = 200, 100
+        if random.randint(0, 1) == 1:
+            draw.pieslice((0, 0, 200, 200), start=180, end=360, fill=color)
+            width, height = 200, 100
+        else:
+            draw.pieslice((0, 0, 200, 200), start=0, end=180, fill=color)
+            width, height = 200, 300
 
     _, _, w, h = draw.textbbox((0, 0), character, font=font)
     draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
@@ -63,4 +67,4 @@ def generateImage(shape, character, color):
 imageAmount = 1
 
 for i in range(imageAmount):
-    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage("semicircle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
