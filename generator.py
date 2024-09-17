@@ -31,7 +31,8 @@ def generateImage(shape, character, color):
         width, height = 200, 200
 
     elif shape == "quarter circle":
-        draw.pieslice((0, 0, 200, 200), start=0, end=90, fill=color)
+        draw.pieslice((0, 0, 200, 200), start=270, end=360, fill=color)
+        width, height = 270, 100
         # figure out sizing and text placement later
 
     elif shape == "pentagon":
@@ -55,4 +56,4 @@ def generateImage(shape, character, color):
     #image.save(f"vision-{shape}.png")
 
 
-generateImage("semicircle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+generateImage("quarter circle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
