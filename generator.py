@@ -10,7 +10,6 @@ def generateImage(shape, character, color):
     print(shape + " " + character)
     size = (200, 200)
 
-
     image = Image.new("RGB", size)
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("arial.ttf", 50)
@@ -23,9 +22,13 @@ def generateImage(shape, character, color):
 
     elif shape == "triangle":
         draw.polygon([(100,0), (0,200), (200, 200)], fill=color)
-        draw.text((200 // 2, 200 // 2), character, font=font, fill="white")
+        _, _, w, h = draw.textbbox((0, 0), character, font=font)
+        draw.text(((200-w)/2, (250-h)/2), character, font=font, fill="white")   
 
-        #fix centering later
+    elif shape == "circle":
+        draw.ellipse((0, 0, 200, 200), fill=color)
+        _, _, w, h = draw.textbbox((0, 0), character, font=font)
+        draw.text(((200-w)/2, (200-h)/2), character, font=font, fill="white")
 
     image.save("vision.png")
     #image.save(f"vision-{shape}.png")
