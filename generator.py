@@ -9,6 +9,8 @@ shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star
 # also TODO: isolate ODLC from background to crop regardless of size or position for training data, then turn B&W? - thanks pratham btw
 # nvm, either turn to greyscale (inefficent) or just remove color entirely and just set basic color
 
+#   TODO: Optimize code / remove redundancy
+
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def generateImage(shape, character, color):
