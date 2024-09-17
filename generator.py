@@ -3,7 +3,7 @@ import random
 # from ultralytics import YOLO
 from PIL import Image, ImageDraw, ImageFont
 
-shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross"]
+shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def generateImage(shape, character, color):
@@ -30,8 +30,17 @@ def generateImage(shape, character, color):
         _, _, w, h = draw.textbbox((0, 0), character, font=font)
         draw.text(((200-w)/2, (200-h)/2), character, font=font, fill="white")
 
+    elif shape == "quarter circle":
+        draw.pieslice((-50, -50, 200, 200), start=0, end=90, fill=color)
+        # figure out sizing and text placement later
+
+    elif shape == "pentagon":
+        draw.regular_polygon((100, 100, 100), 5, fill=color)
+        _, _, w, h = draw.textbbox((0, 0), character, font=font)
+        draw.text(((200-w)/2, (200-h)/2), character, font=font, fill="white")
+
     image.save("vision.png")
     #image.save(f"vision-{shape}.png")
 
 
-generateImage("triangle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+generateImage("pentagon", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
