@@ -5,7 +5,10 @@ from PIL import Image, ImageDraw, ImageFont
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
 
-# star, cross, semicircle, quarter circle remaining
+# star, and variating semicircle and quarter circle remaining
+# also TODO: isolate ODLC from background to crop regardless of size or position for training data, then turn B&W? - thanks pratham btw
+# nvm, either turn to greyscale (inefficent) or just remove color entirely and just set basic color
+
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def generateImage(shape, character, color):
@@ -33,7 +36,6 @@ def generateImage(shape, character, color):
     elif shape == "quarter circle":
         draw.pieslice((0, 0, 200, 200), start=270, end=360, fill=color)
         width, height = 270, 100
-        # figure out sizing and text placement later
 
     elif shape == "pentagon":
         draw.regular_polygon((100, 100, 100), 5, fill=color)
@@ -51,9 +53,12 @@ def generateImage(shape, character, color):
     _, _, w, h = draw.textbbox((0, 0), character, font=font)
     draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
 
+    image.convert("L")
+    image.save(f"vision.png")
 
-    image.save("vision.png")
-    #image.save(f"vision-{shape}.png")
 
 
-generateImage("quarter circle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+imageAmount = 1
+
+for i in range(imageAmount):
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
