@@ -55,6 +55,8 @@ def generateImage(shape, character, color):
 
     image.convert("L")
     image.save(f"vision.png")
+    i = Image.open("vision.png").convert("L")
+    i.save("vision.png")
 
 
 
