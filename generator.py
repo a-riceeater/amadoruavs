@@ -1,25 +1,39 @@
 import numpy as np
 import random
 # from ultralytics import YOLO
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross"]
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-def generateImage(size, shape, character, color):
+def generateImage(shape, character, color):
     print(shape + " " + character)
+    size = (800, 800)
 
+    width, height = 200, 150
     x, y = random.randint(0, size[0]), random.randint(0, size[1])
-    width, height = random.randint(50, 100), random.randint(50, 100)
 
     image = Image.new("RGB", size, "white")
     draw = ImageDraw.Draw(image)
-    draw.rectangle([(x, y), (width, height)], fill="blue")
+
+    if shape == "rectangle":
+        x, y = random.randint(0, size[0] - width), random.randint(0, size[1] - height)
+        draw.rectangle([x, y, x + width, y + height], fill=color)
     
+        font = ImageFont.truetype("arial.ttf", 50)
+
+        text_bbox = draw.textbbox((0, 0), character, font=font)
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
+
+        text_x = x + (width - text_width) // 2
+        text_y = y + (height - text_height) // 2
+
+        draw.text((text_x, text_y), character, fill="white", font=font)
+
+
 
     image.save("vision.png")
 
-    # TODO: Randomize location (and scale?) + colors + shape + rotate + position + potentially add noise?
 
-
-generateImage((random.randint(500, 1000), random.randint(500, 1000)), "rectangle", random.choice(letters), "blue")
+generateImage("rectangle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
