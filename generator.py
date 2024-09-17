@@ -8,9 +8,9 @@ letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def generateImage(shape, character, color):
     print(shape + " " + character)
-    size = (800, 800)
+    size = (100, 100)
 
-    width, height = 200, 150
+    width, height = 100, 100
     x, y = random.randint(0, size[0]), random.randint(0, size[1])
 
     image = Image.new("RGB", size, "white")
@@ -18,20 +18,12 @@ def generateImage(shape, character, color):
 
     if shape == "rectangle":
         x, y = random.randint(0, size[0] - width), random.randint(0, size[1] - height)
-        draw.rectangle([x, y, x + width, y + height], fill=color)
+        draw.rectangle([(0, 0), (100, 100)], fill=color)
     
         font = ImageFont.truetype("arial.ttf", 50)
 
-        text_bbox = draw.textbbox((0, 0), character, font=font)
-        text_width = text_bbox[2] - text_bbox[0]
-        text_height = text_bbox[3] - text_bbox[1]
-
-        text_x = x + (width - text_width) // 2
-        text_y = y + (height - text_height) // 2
-
-        draw.text((text_x, text_y), character, fill="white", font=font)
-
-
+        _, _, w, h = draw.textbbox((0, 0), character, font=font)
+        draw.text(((100-w)/2, (100-h)/2), character, font=font, fill="white")
 
     image.save("vision.png")
 
