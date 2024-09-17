@@ -4,6 +4,8 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
+
+# star, cross, semicircle, quarter circle remaining
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def generateImage(shape, character, color):
