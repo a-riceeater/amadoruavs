@@ -8,24 +8,27 @@ letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def generateImage(shape, character, color):
     print(shape + " " + character)
-    size = (100, 100)
+    size = (200, 200)
 
-    width, height = 100, 100
-    x, y = random.randint(0, size[0]), random.randint(0, size[1])
 
-    image = Image.new("RGB", size, "white")
+    image = Image.new("RGB", size)
     draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("arial.ttf", 50)
 
     if shape == "rectangle":
-        x, y = random.randint(0, size[0] - width), random.randint(0, size[1] - height)
-        draw.rectangle([(0, 0), (100, 100)], fill=color)
-    
-        font = ImageFont.truetype("arial.ttf", 50)
-
+        width, height = 200, 100
+        draw.rectangle([(0, 0), (200, 100)], fill=color)
         _, _, w, h = draw.textbbox((0, 0), character, font=font)
-        draw.text(((100-w)/2, (100-h)/2), character, font=font, fill="white")
+        draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
+
+    elif shape == "triangle":
+        draw.polygon([(100,0), (0,200), (200, 200)], fill=color)
+        draw.text((200 // 2, 200 // 2), character, font=font, fill="white")
+
+        #fix centering later
 
     image.save("vision.png")
+    #image.save(f"vision-{shape}.png")
 
 
-generateImage("rectangle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+generateImage("triangle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
