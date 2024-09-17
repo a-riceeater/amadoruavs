@@ -41,8 +41,14 @@ def generateImage(shape, character, color):
         _, _, w, h = draw.textbbox((0, 0), character, font=font)
         draw.text(((200-w)/2, (200-h)/2), character, font=font, fill="white")
 
+    elif shape == "cross":
+        draw.rectangle([(0, 50), (200, 100)], fill=color)
+        draw.rectangle([(100 / 2, 0), (150, 200)], fill=color)
+        _, _, w, h = draw.textbbox((0, 0), character, font=font)
+        draw.text(((200-w)/2, (200-h)/2), character, font=font, fill="white")
+
     image.save("vision.png")
     #image.save(f"vision-{shape}.png")
 
 
-generateImage("pentagon", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+generateImage("cross", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
