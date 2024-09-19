@@ -71,9 +71,12 @@ def generateImage(shape, character, color):
     draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
 
     rotation = random.randint(0, 360)
+
     image.save(f"vision.png", "PNG")
+
     i = Image.open("vision.png").rotate(rotation)
     i.save("vision.png", "PNG")
+    
     img_colored = Image.open("vision.png")
     img_colored.load()
     alpha = img_colored.split()[-1]
@@ -82,8 +85,7 @@ def generateImage(shape, character, color):
     img_grey.save("vision.png")
 
 
-
 imageAmount = 1
 
 for i in range(imageAmount):
-    generateImage("quarter circle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
