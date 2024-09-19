@@ -75,8 +75,8 @@ def generateImage(shape, character, color):
 
     image.save(f"vision.png", "PNG")
 
-    i = Image.open("vision.png").rotate(rotation)
-    i.save("vision.png", "PNG")
+    img_straight = Image.open("vision.png").rotate(rotation, expand=True)
+    img_straight.save("vision.png", "PNG")
     
     img_colored = Image.open("vision.png")
     img_colored.load()
@@ -87,7 +87,7 @@ def generateImage(shape, character, color):
 
 
 
-imageAmount = 10000
+imageAmount = 1
 start = time.time()
 for i in range(imageAmount):
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
