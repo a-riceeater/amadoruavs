@@ -2,6 +2,7 @@ import numpy as np
 import random
 # from ultralytics import YOLO
 from PIL import Image, ImageDraw, ImageFont
+import time
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
 
@@ -9,7 +10,7 @@ shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star
 # also TODO: isolate ODLC from background to crop regardless of size or position for training data, then turn B&W? - thanks pratham btw
 # nvm, either turn to greyscale (inefficent) or just remove color entirely and just set basic color
 
-#   TODO: Optimize code / remove redundancy
+#   TODO: Optimize code / remove redundancy (converting images to greyscale is temporary, and also is more than 2x slower in testing)
 
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -62,13 +63,15 @@ def generateImage(shape, character, color):
     draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
 
     image.convert("L")
-    image.save(f"vision.png")
-    i = Image.open("vision.png").convert("L")
-    i.save("vision.png")
+    image.save(f"output/vision-{color}.png")
+    i = Image.open(f"output/vision-{color}.png").convert("L")
+    i.save(f"output/vision-{color}.png")
 
 
 
-imageAmount = 1
-
+imageAmount = 10000
+start = time.time()
 for i in range(imageAmount):
-    generateImage("semicircle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+
+print("--- completed generation in %s seconds ---" % (time.time() - start))
