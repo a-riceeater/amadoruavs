@@ -18,7 +18,7 @@ def generateImage(shape, character, color):
     print(shape + " " + character)
     size = (200, 200)
 
-    image = Image.new("RGB", size)
+    image = Image.new("RGBA", size, (255, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("arial.ttf", 50)
 
@@ -41,6 +41,15 @@ def generateImage(shape, character, color):
         if rand == 0:
             draw.pieslice((0, 0, 200, 200), start=270, end=360, fill=color)
             width, height = 270, 100
+        elif rand == 1:
+            draw.pieslice((0, 0, 200, 200), start=180, end=270, fill=color)
+            width, height = 120, 100
+        elif rand == 2:
+            draw.pieslice((0, 0, 200, 200), start=0, end=90, fill=color)
+            width, height = 270, 270
+        else:
+            draw.pieslice((0, 0, 200, 200), start=90, end=180, fill=color)
+            width, height = 120, 270
 
     elif shape == "pentagon":
         draw.regular_polygon((100, 100, 100), 5, fill=color)
@@ -62,16 +71,20 @@ def generateImage(shape, character, color):
     _, _, w, h = draw.textbbox((0, 0), character, font=font)
     draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
 
-    image.convert("L")
-    image.save(f"output/vision-{color}.png")
-    i = Image.open(f"output/vision-{color}.png").convert("L")
-    i.save(f"output/vision-{color}.png")
+    rotation = random.randint(0, 360)
+    image.save(f"vision.png", "PNG")
+    i = Image.open("vision.png").rotate(rotation)
+    i.save("vision.png", "PNG")
+    img_colored = Image.open("vision.png")
+    img_colored.load()
+    alpha = img_colored.split()[-1]
+    img_grey = img_colored.convert("L").convert("RGB")
+    img_grey.putalpha(alpha)
+    img_grey.save("vision.png")
 
 
 
 imageAmount = 10000
 start = time.time()
 for i in range(imageAmount):
-    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
-
-print("--- completed generation in %s seconds ---" % (time.time() - start))
+    generateImage("quarter circle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
