@@ -91,3 +91,7 @@ imageAmount = 1
 start = time.time()
 for i in range(imageAmount):
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+
+    #pentagon in center
+    # trinalges on sides
+    # turn 36deg or 360-36deg
