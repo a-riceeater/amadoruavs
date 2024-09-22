@@ -3,6 +3,7 @@ import random
 # from ultralytics import YOLO
 from PIL import Image, ImageDraw, ImageFont
 import time
+import math
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
 
@@ -67,6 +68,24 @@ def generateImage(shape, character, color):
         else:
             draw.pieslice((0, 0, 200, 200), start=0, end=180, fill=color)
             width, height = 200, 300
+    
+    elif shape == "star":
+        outer_radius = 80
+        inner_radius = 35
+        center = (100, 100)
+        points = []
+
+        def get_point(center, radius, angle):
+            x = center[0] + radius * math.cos(math.radians(angle))
+            y = center[1] - radius * math.sin(math.radians(angle))
+            return (x, y)
+        
+        for i in range(10):
+            radius = outer_radius if i % 2 == 0 else inner_radius
+            angle = i * 36
+            points.append(get_point(center, radius, angle))
+
+        draw.polygon(points, fill=color)
 
     _, _, w, h = draw.textbbox((0, 0), character, font=font)
     draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
@@ -90,4 +109,4 @@ def generateImage(shape, character, color):
 imageAmount = 1
 start = time.time()
 for i in range(imageAmount):
-    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage("star", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
