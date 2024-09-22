@@ -109,4 +109,4 @@ def generateImage(shape, character, color):
 imageAmount = 1
 start = time.time()
 for i in range(imageAmount):
-    generateImage("star", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
