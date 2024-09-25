@@ -4,14 +4,13 @@ import random
 from PIL import Image, ImageDraw, ImageFont
 import time
 import math
+import matplotlib.pyplot as plt
+import bbox_visualizer as bbv
+import cv2
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
 
-# star, and variating semicircle and quarter circle remaining
-# also TODO: isolate ODLC from background to crop regardless of size or position for training data, then turn B&W? - thanks pratham btw
-# nvm, either turn to greyscale (inefficent) or just remove color entirely and just set basic color
-
-#   TODO: Optimize code / remove redundancy (converting images to greyscale is temporary, and also is more than 2x slower in testing)
+# todo: optimize repeated code, fix bounding box for quarter circles
 
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -24,6 +23,7 @@ def generateImage(shape, character, color):
     font = ImageFont.truetype("arial.ttf", 50)
 
     width, height = 200, 200
+    bbox = None
 
     if shape == "rectangle":
         width, height = 200, 100
@@ -104,7 +104,33 @@ def generateImage(shape, character, color):
     img_grey.putalpha(alpha)
     img_grey.save("vision.png")
 
+    completed = Image.open("vision.png")
+    pix = completed.load()
+    
+    xmin = -1
+    xmax = 0
+    ymin = -1
+    ymax = 0
+    
+    for x in range(completed.width):
+        for y in range (completed.height):
+            if pix[x, y] != (0, 0, 0, 0):
+                if x < xmin:
+                    xmin = x
+                if x > xmax:
+                    xmax = x
+                if y < ymin:
+                    ymin = y
+                if y > ymax: 
+                    ymax = y
+    print(f"(xmin: {xmin}, ymin: {ymin}, xmax: {xmax}, ymax: {ymax})")
 
+    # debug bounding box checking, will remove later
+
+    img = cv2.imread("vision.png")
+    bimg = bbv.draw_rectangle(img, (xmin, ymin, xmax, ymax))
+    plt.imshow(bimg)
+    plt.show()
 
 imageAmount = 1
 start = time.time()
