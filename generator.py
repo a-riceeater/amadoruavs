@@ -102,23 +102,27 @@ def generateImage(shape, character, color):
     alpha = img_colored.split()[-1]
     img_grey = img_colored.convert("L").convert("RGB")
     img_grey.putalpha(alpha)
-    img_grey.save("vision.png")
+    #img_grey.save("vision.png")
 
     completed = Image.open("vision.png")
     pix = completed.load()
     
-    xmin = -1
+    xmin = completed.width
+    print(completed.width)
     xmax = 0
-    ymin = -1
+    ymin = completed.height
     ymax = 0
     
     for x in range(completed.width):
         for y in range (completed.height):
-            if pix[x, y] != (0, 0, 0, 0):
+            cp = pix[x, y]
+            if cp[0] != 0 and cp[1] != 0 and cp[2] != 0 and cp[3] != 0: # weird comparison bcus python tuples are weird
                 if x < xmin:
                     xmin = x
+                    print(f"XMIN FOUND FROM {xmin} to {x}, {y}, {pix[x,y]}, {pix[x, y] != (0, 0, 0, 0)}")
                 if x > xmax:
                     xmax = x
+                    print(f"XMAX FOUND FROM {xmax} to {x}, {y}, {pix[x,y]}, {pix[x, y] != (0, 0, 0, 0)}")
                 if y < ymin:
                     ymin = y
                 if y > ymax: 
@@ -135,4 +139,4 @@ def generateImage(shape, character, color):
 imageAmount = 1
 start = time.time()
 for i in range(imageAmount):
-    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage("quarter circle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
