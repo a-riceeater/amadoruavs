@@ -93,23 +93,22 @@ def generateImage(shape, character, color, count):
 
     rotation = random.randint(0, 360)
 
-    image.save(f"vision-{count}.png", "PNG")
+    image.save(f"./model/images/vision-{count}.png", "PNG")
 
-    img_straight = Image.open(f"vision-{count}.png").rotate(rotation, expand=True)
-    img_straight.save(f"vision-{count}.png", "PNG")
+    img_straight = Image.open(f"./model/images/vision-{count}.png").rotate(rotation, expand=True)
+    img_straight.save(f"./model/images/vision-{count}.png", "PNG")
     
-    img_colored = Image.open(f"vision-{count}.png")
+    img_colored = Image.open(f"./model/images/vision-{count}.png")
     img_colored.load()
     alpha = img_colored.split()[-1]
     img_grey = img_colored.convert("L").convert("RGB")
     img_grey.putalpha(alpha)
-    img_grey.save(f"vision-{count}.png")
+    img_grey.save(f"./model/images/vision-{count}.png")
 
-    completed = Image.open(f"vision-{count}.png")
+    completed = Image.open(f"./model/images/vision-{count}.png")
     pix = completed.load()
     
     xmin = completed.width
-    print(completed.width)
     xmax = 0
     ymin = completed.height
     ymax = 0
@@ -129,12 +128,16 @@ def generateImage(shape, character, color, count):
 
     # debug bounding box checking, will remove later
 
-    #img = cv2.imread(f"vision-{count}.png")
+    #img = cv2.imread(f"./model/images/vision-{count}.png")
     #bimg = bbv.draw_rectangle(img, (xmin, ymin, xmax, ymax))
     #plt.imshow(bimg)
     #plt.show()
 
-imageAmount = 1
+    label = open(f"./model/labels/train/vision-{count}.txt", "w")
+    label.write(shape + f" {character} {xmin} {ymin} {xmax} {ymax}")
+    label.close()
+
+imageAmount = 150
 start = time.time()
 for i in range(imageAmount):
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i)
