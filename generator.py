@@ -143,10 +143,20 @@ for i in range(imageAmount):
 def generateYAML():
     print("GENERATING YAML")
     outputPath = os.path.join(os.getcwd(), "model")
+    trainPath = os.path.join(os.getcwd(), "model", "train")
+    labelPath = os.path.join(os.getcwd(), "model", "labels")
+
+    if not os.path.exists(outputPath):
+        os.makedirs(outputPath)
+
     if not os.path.exists(outputPath):
         os.makedirs(outputPath)
         print("created directory")
 
+    if not os.path.exists(outputPath):
+        os.makedirs(outputPath)
+        print("created directory")
+    
     f = open(os.path.join(outputPath, "model.yml"), "w")
     print(outputPath)
 
