@@ -7,6 +7,7 @@ import math
 import matplotlib.pyplot as plt
 import bbox_visualizer as bbv
 import cv2
+import os
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
 
@@ -14,7 +15,7 @@ shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star
 
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-def generateImage(shape, character, color):
+def generateImage(shape, character, color, count):
     print(shape + " " + character)
     size = (200, 200)
 
@@ -92,19 +93,19 @@ def generateImage(shape, character, color):
 
     rotation = random.randint(0, 360)
 
-    image.save(f"vision.png", "PNG")
+    image.save(f"vision-{count}.png", "PNG")
 
-    img_straight = Image.open("vision.png").rotate(rotation, expand=True)
-    img_straight.save("vision.png", "PNG")
+    img_straight = Image.open(f"vision-{count}.png").rotate(rotation, expand=True)
+    img_straight.save(f"vision-{count}.png", "PNG")
     
-    img_colored = Image.open("vision.png")
+    img_colored = Image.open(f"vision-{count}.png")
     img_colored.load()
     alpha = img_colored.split()[-1]
     img_grey = img_colored.convert("L").convert("RGB")
     img_grey.putalpha(alpha)
-    img_grey.save("vision.png")
+    img_grey.save(f"vision-{count}.png")
 
-    completed = Image.open("vision.png")
+    completed = Image.open(f"vision-{count}.png")
     pix = completed.load()
     
     xmin = completed.width
@@ -119,24 +120,45 @@ def generateImage(shape, character, color):
             if cp[0] != 0 and cp[1] != 0 and cp[2] != 0 and cp[3] != 0: # weird comparison bcus python tuples are weird
                 if x < xmin:
                     xmin = x
-                    print(f"XMIN FOUND FROM {xmin} to {x}, {y}, {pix[x,y]}, {pix[x, y] != (0, 0, 0, 0)}")
                 if x > xmax:
                     xmax = x
-                    print(f"XMAX FOUND FROM {xmax} to {x}, {y}, {pix[x,y]}, {pix[x, y] != (0, 0, 0, 0)}")
                 if y < ymin:
                     ymin = y
                 if y > ymax: 
                     ymax = y
-    print(f"(xmin: {xmin}, ymin: {ymin}, xmax: {xmax}, ymax: {ymax})")
 
     # debug bounding box checking, will remove later
 
-    img = cv2.imread("vision.png")
-    bimg = bbv.draw_rectangle(img, (xmin, ymin, xmax, ymax))
-    plt.imshow(bimg)
-    plt.show()
+    #img = cv2.imread(f"vision-{count}.png")
+    #bimg = bbv.draw_rectangle(img, (xmin, ymin, xmax, ymax))
+    #plt.imshow(bimg)
+    #plt.show()
 
 imageAmount = 1
 start = time.time()
 for i in range(imageAmount):
-    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i)
+
+
+def generateYAML():
+    print("GENERATING YAML")
+    outputPath = os.path.join(os.getcwd(), "model")
+    if not os.path.exists(outputPath):
+        os.makedirs(outputPath)
+        print("created directory")
+
+    f = open(os.path.join(outputPath, "model.yml"), "w")
+    print(outputPath)
+
+    text = "path: ./\ntrain: ./images\n\nnames: [\n"
+
+    for shape in shapes:
+        for letter in letters:
+            text += f"\t\'{shape} {letter}\',\n"
+    
+    text += "]"
+
+    f.write(text)
+    f.close()
+
+generateYAML()
