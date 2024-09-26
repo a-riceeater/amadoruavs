@@ -102,7 +102,7 @@ def generateImage(shape, character, color):
     alpha = img_colored.split()[-1]
     img_grey = img_colored.convert("L").convert("RGB")
     img_grey.putalpha(alpha)
-    #img_grey.save("vision.png")
+    img_grey.save("vision.png")
 
     completed = Image.open("vision.png")
     pix = completed.load()
@@ -139,4 +139,4 @@ def generateImage(shape, character, color):
 imageAmount = 1
 start = time.time()
 for i in range(imageAmount):
-    generateImage("quarter circle", random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)))
