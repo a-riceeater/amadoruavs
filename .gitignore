@@ -1,4 +1,5 @@
 .venv
 output
-model/labels/train/*
 model/images/*
+model/labels/*
+runs

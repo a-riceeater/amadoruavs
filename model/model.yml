@@ -1,213 +1,214 @@
 path: ./
-train: ./images
+train: ./images/train
+val: ./images/val
 
-names: [
-	'circle A',
-	'circle B',
-	'circle C',
-	'circle D',
-	'circle E',
-	'circle F',
-	'circle G',
-	'circle H',
-	'circle I',
-	'circle J',
-	'circle K',
-	'circle L',
-	'circle M',
-	'circle N',
-	'circle O',
-	'circle P',
-	'circle Q',
-	'circle R',
-	'circle S',
-	'circle T',
-	'circle U',
-	'circle V',
-	'circle W',
-	'circle X',
-	'circle Y',
-	'circle Z',
-	'quarter circle A',
-	'quarter circle B',
-	'quarter circle C',
-	'quarter circle D',
-	'quarter circle E',
-	'quarter circle F',
-	'quarter circle G',
-	'quarter circle H',
-	'quarter circle I',
-	'quarter circle J',
-	'quarter circle K',
-	'quarter circle L',
-	'quarter circle M',
-	'quarter circle N',
-	'quarter circle O',
-	'quarter circle P',
-	'quarter circle Q',
-	'quarter circle R',
-	'quarter circle S',
-	'quarter circle T',
-	'quarter circle U',
-	'quarter circle V',
-	'quarter circle W',
-	'quarter circle X',
-	'quarter circle Y',
-	'quarter circle Z',
-	'triangle A',
-	'triangle B',
-	'triangle C',
-	'triangle D',
-	'triangle E',
-	'triangle F',
-	'triangle G',
-	'triangle H',
-	'triangle I',
-	'triangle J',
-	'triangle K',
-	'triangle L',
-	'triangle M',
-	'triangle N',
-	'triangle O',
-	'triangle P',
-	'triangle Q',
-	'triangle R',
-	'triangle S',
-	'triangle T',
-	'triangle U',
-	'triangle V',
-	'triangle W',
-	'triangle X',
-	'triangle Y',
-	'triangle Z',
-	'rectangle A',
-	'rectangle B',
-	'rectangle C',
-	'rectangle D',
-	'rectangle E',
-	'rectangle F',
-	'rectangle G',
-	'rectangle H',
-	'rectangle I',
-	'rectangle J',
-	'rectangle K',
-	'rectangle L',
-	'rectangle M',
-	'rectangle N',
-	'rectangle O',
-	'rectangle P',
-	'rectangle Q',
-	'rectangle R',
-	'rectangle S',
-	'rectangle T',
-	'rectangle U',
-	'rectangle V',
-	'rectangle W',
-	'rectangle X',
-	'rectangle Y',
-	'rectangle Z',
-	'pentagon A',
-	'pentagon B',
-	'pentagon C',
-	'pentagon D',
-	'pentagon E',
-	'pentagon F',
-	'pentagon G',
-	'pentagon H',
-	'pentagon I',
-	'pentagon J',
-	'pentagon K',
-	'pentagon L',
-	'pentagon M',
-	'pentagon N',
-	'pentagon O',
-	'pentagon P',
-	'pentagon Q',
-	'pentagon R',
-	'pentagon S',
-	'pentagon T',
-	'pentagon U',
-	'pentagon V',
-	'pentagon W',
-	'pentagon X',
-	'pentagon Y',
-	'pentagon Z',
-	'star A',
-	'star B',
-	'star C',
-	'star D',
-	'star E',
-	'star F',
-	'star G',
-	'star H',
-	'star I',
-	'star J',
-	'star K',
-	'star L',
-	'star M',
-	'star N',
-	'star O',
-	'star P',
-	'star Q',
-	'star R',
-	'star S',
-	'star T',
-	'star U',
-	'star V',
-	'star W',
-	'star X',
-	'star Y',
-	'star Z',
-	'cross A',
-	'cross B',
-	'cross C',
-	'cross D',
-	'cross E',
-	'cross F',
-	'cross G',
-	'cross H',
-	'cross I',
-	'cross J',
-	'cross K',
-	'cross L',
-	'cross M',
-	'cross N',
-	'cross O',
-	'cross P',
-	'cross Q',
-	'cross R',
-	'cross S',
-	'cross T',
-	'cross U',
-	'cross V',
-	'cross W',
-	'cross X',
-	'cross Y',
-	'cross Z',
-	'semicircle A',
-	'semicircle B',
-	'semicircle C',
-	'semicircle D',
-	'semicircle E',
-	'semicircle F',
-	'semicircle G',
-	'semicircle H',
-	'semicircle I',
-	'semicircle J',
-	'semicircle K',
-	'semicircle L',
-	'semicircle M',
-	'semicircle N',
-	'semicircle O',
-	'semicircle P',
-	'semicircle Q',
-	'semicircle R',
-	'semicircle S',
-	'semicircle T',
-	'semicircle U',
-	'semicircle V',
-	'semicircle W',
-	'semicircle X',
-	'semicircle Y',
-	'semicircle Z',
-]
+names:
+
+  0: circle A
+  1: circle B
+  2: circle C
+  3: circle D
+  4: circle E
+  5: circle F
+  6: circle G
+  7: circle H
+  8: circle I
+  9: circle J
+  10: circle K
+  11: circle L
+  12: circle M
+  13: circle N
+  14: circle O
+  15: circle P
+  16: circle Q
+  17: circle R
+  18: circle S
+  19: circle T
+  20: circle U
+  21: circle V
+  22: circle W
+  23: circle X
+  24: circle Y
+  25: circle Z
+  26: quarter circle A
+  27: quarter circle B
+  28: quarter circle C
+  29: quarter circle D
+  30: quarter circle E
+  31: quarter circle F
+  32: quarter circle G
+  33: quarter circle H
+  34: quarter circle I
+  35: quarter circle J
+  36: quarter circle K
+  37: quarter circle L
+  38: quarter circle M
+  39: quarter circle N
+  40: quarter circle O
+  41: quarter circle P
+  42: quarter circle Q
+  43: quarter circle R
+  44: quarter circle S
+  45: quarter circle T
+  46: quarter circle U
+  47: quarter circle V
+  48: quarter circle W
+  49: quarter circle X
+  50: quarter circle Y
+  51: quarter circle Z
+  52: triangle A
+  53: triangle B
+  54: triangle C
+  55: triangle D
+  56: triangle E
+  57: triangle F
+  58: triangle G
+  59: triangle H
+  60: triangle I
+  61: triangle J
+  62: triangle K
+  63: triangle L
+  64: triangle M
+  65: triangle N
+  66: triangle O
+  67: triangle P
+  68: triangle Q
+  69: triangle R
+  70: triangle S
+  71: triangle T
+  72: triangle U
+  73: triangle V
+  74: triangle W
+  75: triangle X
+  76: triangle Y
+  77: triangle Z
+  78: rectangle A
+  79: rectangle B
+  80: rectangle C
+  81: rectangle D
+  82: rectangle E
+  83: rectangle F
+  84: rectangle G
+  85: rectangle H
+  86: rectangle I
+  87: rectangle J
+  88: rectangle K
+  89: rectangle L
+  90: rectangle M
+  91: rectangle N
+  92: rectangle O
+  93: rectangle P
+  94: rectangle Q
+  95: rectangle R
+  96: rectangle S
+  97: rectangle T
+  98: rectangle U
+  99: rectangle V
+  100: rectangle W
+  101: rectangle X
+  102: rectangle Y
+  103: rectangle Z
+  104: pentagon A
+  105: pentagon B
+  106: pentagon C
+  107: pentagon D
+  108: pentagon E
+  109: pentagon F
+  110: pentagon G
+  111: pentagon H
+  112: pentagon I
+  113: pentagon J
+  114: pentagon K
+  115: pentagon L
+  116: pentagon M
+  117: pentagon N
+  118: pentagon O
+  119: pentagon P
+  120: pentagon Q
+  121: pentagon R
+  122: pentagon S
+  123: pentagon T
+  124: pentagon U
+  125: pentagon V
+  126: pentagon W
+  127: pentagon X
+  128: pentagon Y
+  129: pentagon Z
+  130: star A
+  131: star B
+  132: star C
+  133: star D
+  134: star E
+  135: star F
+  136: star G
+  137: star H
+  138: star I
+  139: star J
+  140: star K
+  141: star L
+  142: star M
+  143: star N
+  144: star O
+  145: star P
+  146: star Q
+  147: star R
+  148: star S
+  149: star T
+  150: star U
+  151: star V
+  152: star W
+  153: star X
+  154: star Y
+  155: star Z
+  156: cross A
+  157: cross B
+  158: cross C
+  159: cross D
+  160: cross E
+  161: cross F
+  162: cross G
+  163: cross H
+  164: cross I
+  165: cross J
+  166: cross K
+  167: cross L
+  168: cross M
+  169: cross N
+  170: cross O
+  171: cross P
+  172: cross Q
+  173: cross R
+  174: cross S
+  175: cross T
+  176: cross U
+  177: cross V
+  178: cross W
+  179: cross X
+  180: cross Y
+  181: cross Z
+  182: semicircle A
+  183: semicircle B
+  184: semicircle C
+  185: semicircle D
+  186: semicircle E
+  187: semicircle F
+  188: semicircle G
+  189: semicircle H
+  190: semicircle I
+  191: semicircle J
+  192: semicircle K
+  193: semicircle L
+  194: semicircle M
+  195: semicircle N
+  196: semicircle O
+  197: semicircle P
+  198: semicircle Q
+  199: semicircle R
+  200: semicircle S
+  201: semicircle T
+  202: semicircle U
+  203: semicircle V
+  204: semicircle W
+  205: semicircle X
+  206: semicircle Y
+  207: semicircle Z

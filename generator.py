@@ -10,12 +10,47 @@ import cv2
 import os
 
 shapes = ["circle", "quarter circle", "triangle", "rectangle", "pentagon", "star", "cross", "semicircle"]
-
+shapeLetters = {}
 # todo: optimize repeated code, fix bounding box for quarter circles
 
 letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-def generateImage(shape, character, color, count):
+def generateYAML():
+    print("GENERATING YAML")
+    outputPath = os.path.join(os.getcwd(), "model")
+    trainPath = os.path.join(os.getcwd(), "model", "train")
+    labelPath = os.path.join(os.getcwd(), "model", "labels")
+
+    if not os.path.exists(outputPath):
+        os.makedirs(outputPath)
+
+    if not os.path.exists(outputPath):
+        os.makedirs(outputPath)
+        print("created directory")
+
+    if not os.path.exists(outputPath):
+        os.makedirs(outputPath)
+        print("created directory")
+    
+    f = open(os.path.join(outputPath, "model.yml"), "w")
+    print(outputPath)
+
+    text = "path: ./\ntrain: ./images/train\nval: ./images/val\n\nnames:\n"
+
+    num = 0
+    for shape in shapes:
+        for letter in letters:
+            text += f"\n  {num}: {shape} {letter}"
+            shapeLetters[f"{shape} {letter}"] = num
+            num += 1
+    
+    f.write(text)
+    f.close()
+
+generateYAML()
+
+
+def generateImage(shape, character, color, count, output):
     print(shape + " " + character)
     size = (200, 200)
 
@@ -93,19 +128,19 @@ def generateImage(shape, character, color, count):
 
     rotation = random.randint(0, 360)
 
-    image.save(f"./model/images/vision-{count}.png", "PNG")
+    image.save(f"./model/images/{output}/vision-{count}.png", "PNG")
 
-    img_straight = Image.open(f"./model/images/vision-{count}.png").rotate(rotation, expand=True)
-    img_straight.save(f"./model/images/vision-{count}.png", "PNG")
+    img_straight = Image.open(f"./model/images/{output}/vision-{count}.png").rotate(rotation, expand=True)
+    img_straight.save(f"./model/images/{output}/vision-{count}.png", "PNG")
     
-    img_colored = Image.open(f"./model/images/vision-{count}.png")
+    img_colored = Image.open(f"./model/images/{output}/vision-{count}.png")
     img_colored.load()
     alpha = img_colored.split()[-1]
     img_grey = img_colored.convert("L").convert("RGB")
     img_grey.putalpha(alpha)
-    img_grey.save(f"./model/images/vision-{count}.png")
+    img_grey.save(f"./model/images/{output}/vision-{count}.png")
 
-    completed = Image.open(f"./model/images/vision-{count}.png")
+    completed = Image.open(f"./model/images/{output}/vision-{count}.png")
     pix = completed.load()
     
     xmin = completed.width
@@ -133,45 +168,16 @@ def generateImage(shape, character, color, count):
     #plt.imshow(bimg)
     #plt.show()
 
-    label = open(f"./model/labels/train/vision-{count}.txt", "w")
-    label.write(shape + f" {character} {xmin} {ymin} {xmax} {ymax}")
+    label = open(f"./model/labels/{output}/vision-{count}.txt", "w")
+    sc = f"{shape} {character}"
+    label.write(f"{shapeLetters[sc]} {float(xmin) / completed.width} {float(ymin) / completed.height} {float(xmax) / completed.width} {float(ymax) / completed.height}")
     label.close()
 
-imageAmount = 150
+imageAmount = 1000
 start = time.time()
 for i in range(imageAmount):
-    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i)
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "train")
 
 
-def generateYAML():
-    print("GENERATING YAML")
-    outputPath = os.path.join(os.getcwd(), "model")
-    trainPath = os.path.join(os.getcwd(), "model", "train")
-    labelPath = os.path.join(os.getcwd(), "model", "labels")
-
-    if not os.path.exists(outputPath):
-        os.makedirs(outputPath)
-
-    if not os.path.exists(outputPath):
-        os.makedirs(outputPath)
-        print("created directory")
-
-    if not os.path.exists(outputPath):
-        os.makedirs(outputPath)
-        print("created directory")
-    
-    f = open(os.path.join(outputPath, "model.yml"), "w")
-    print(outputPath)
-
-    text = "path: ./\ntrain: ./images\n\nnames: [\n"
-
-    for shape in shapes:
-        for letter in letters:
-            text += f"\t\'{shape} {letter}\',\n"
-    
-    text += "]"
-
-    f.write(text)
-    f.close()
-
-generateYAML()
+for i in range(int(100 * float(0.2))): # generate 20% of the images created for validation
+    generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "val")
