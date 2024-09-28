@@ -24,12 +24,12 @@ def generateYAML():
     if not os.path.exists(outputPath):
         os.makedirs(outputPath)
 
-    if not os.path.exists(outputPath):
-        os.makedirs(outputPath)
+    if not os.path.exists(trainPath):
+        os.makedirs(trainPath)
         print("created directory")
 
-    if not os.path.exists(outputPath):
-        os.makedirs(outputPath)
+    if not os.path.exists(labelPath):
+        os.makedirs(labelPath)
         print("created directory")
     
     f = open(os.path.join(outputPath, "model.yml"), "w")
@@ -54,7 +54,7 @@ def generateImage(shape, character, color, count, output):
     print(shape + " " + character)
     size = (200, 200)
 
-    image = Image.new("RGBA", size, (255, 0, 0, 0))
+    image = Image.new("RGBA", size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("arial.ttf", 50)
 
@@ -163,21 +163,31 @@ def generateImage(shape, character, color, count, output):
 
     # debug bounding box checking, will remove later
 
-    #img = cv2.imread(f"./model/images/vision-{count}.png")
-    #bimg = bbv.draw_rectangle(img, (xmin, ymin, xmax, ymax))
+
+    print((xmin, ymin, xmax, ymax))
+    img = cv2.imread(f"./model/images/{output}/vision-{count}.png")
+    bimg = bbv.draw_rectangle(img, (xmin, ymin, xmax, ymax))
     #plt.imshow(bimg)
     #plt.show()
 
+
     label = open(f"./model/labels/{output}/vision-{count}.txt", "w")
     sc = f"{shape} {character}"
-    label.write(f"{shapeLetters[sc]} {float(xmin) / completed.width} {float(ymin) / completed.height} {float(xmax) / completed.width} {float(ymax) / completed.height}")
+
+    x_center = (xmin + xmax) / (2 * completed.width)
+    y_center = (ymin + ymax) / (2 * completed.height)
+    width = (xmax - xmin) / completed.width
+    height = (ymax - ymin) / completed.height
+
+
+    label.write(f"{shapeLetters[sc]} {x_center} {y_center} {width} {height}")
     label.close()
 
-imageAmount = 1000
+imageAmount = 100
 start = time.time()
 for i in range(imageAmount):
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "train")
 
 
-for i in range(int(100 * float(0.2))): # generate 20% of the images created for validation
+for i in range(20): # generate 20% of the images created for validation
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "val")
