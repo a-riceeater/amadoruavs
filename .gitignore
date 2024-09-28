@@ -3,3 +3,5 @@ output
 model/images/*
 model/labels/*
 runs
+old-runs
+old-runs-2
