@@ -54,7 +54,7 @@ def generateImage(shape, character, color, count, output):
     print(shape + " " + character)
     size = (200, 200)
 
-    image = Image.new("RGBA", size, (255, 0, 0, 0))
+    image = Image.new("RGBA", size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("arial.ttf", 50)
 
@@ -124,7 +124,7 @@ def generateImage(shape, character, color, count, output):
         draw.polygon(points, fill=color)
 
     _, _, w, h = draw.textbbox((0, 0), character, font=font)
-    draw.text(((width-w)/2, (height-h)/2), character, font=font, fill="white")
+    draw.text(((width - w) / 2, (height - h) / 2), character, font=font, fill="white")
 
     rotation = random.randint(0, 360)
 
@@ -132,13 +132,9 @@ def generateImage(shape, character, color, count, output):
 
     img_straight = Image.open(f"./model/images/{output}/vision-{count}.png").rotate(rotation, expand=True)
     img_straight.save(f"./model/images/{output}/vision-{count}.png", "PNG")
-    
-    img_colored = Image.open(f"./model/images/{output}/vision-{count}.png")
-    img_colored.load()
-    alpha = img_colored.split()[-1]
-    img_grey = img_colored.convert("L").convert("RGB")
-    img_grey.putalpha(alpha)
-    img_grey.save(f"./model/images/{output}/vision-{count}.png")
+
+    img_straight = img_straight.convert("LA")
+    img_straight.save(f"./model/images/{output}/vision-{count}.png", "PNG")
 
     completed = Image.open(f"./model/images/{output}/vision-{count}.png")
     pix = completed.load()
@@ -151,7 +147,8 @@ def generateImage(shape, character, color, count, output):
     for x in range(completed.width):
         for y in range (completed.height):
             cp = pix[x, y]
-            if cp[0] != 0 and cp[1] != 0 and cp[2] != 0 and cp[3] != 0: # weird comparison bcus python tuples are weird
+            #print(cp)
+            if cp[0] != 0 and cp[1] != 0: #and cp[2] != 0 and cp[3] != 0: # weird comparison bcus python tuples are weird
                 if x < xmin:
                     xmin = x
                 if x > xmax:
@@ -173,11 +170,11 @@ def generateImage(shape, character, color, count, output):
     label.write(f"{shapeLetters[sc]} {float(xmin) / completed.width} {float(ymin) / completed.height} {float(xmax) / completed.width} {float(ymax) / completed.height}")
     label.close()
 
-imageAmount = 1000
+imageAmount = 10000
 start = time.time()
 for i in range(imageAmount):
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "train")
 
 
-for i in range(int(100 * float(0.2))): # generate 20% of the images created for validation
+for i in range(2000): # generate 20% of the images created for validation
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "val")
