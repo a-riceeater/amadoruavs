@@ -6,6 +6,6 @@ My name is [Elijah Bantugan](https://elijahb.xyz), a 9th grade programmer.
 
 **#1**: `center.py`
 
-**#2**: TBD
+**#2**: geofence.py
 
 **3**: `generator.py`, `train.py`, `val.py`, `vision.py`
