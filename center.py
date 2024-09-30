@@ -23,23 +23,47 @@ plt.scatter(longi, lat)
 plt.show()
 
 X = np.asarray(coordinates)
-dbscan = DBSCAN(eps=0.0002, min_samples=2)
-dbscan.fit(X)
+db = DBSCAN(eps=0.00002, min_samples=5)
+db.fit(X)
+labels = db.labels_
 
-labels = dbscan.labels_
+n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+n_noise_ = list(labels).count(-1)
 
-X_filtered = X[labels != -1]
-filtered_labels = labels[labels != -1]
+print("Estimated number of clusters: %d" % n_clusters_)
+print("Estimated number of noise points: %d" % n_noise_)
 
-plt.figure(figsize=(10, 6))
-scatter = plt.scatter(X_filtered[:, 0], X_filtered[:, 1], c=filtered_labels, cmap='viridis', marker='o')
-plt.title('dbscan clustering w/o outliers')
-plt.xlabel('long')
-plt.ylabel('lat')
+unique_labels = set(labels)
+core_samples_mask = np.zeros_like(labels, dtype=bool)
+core_samples_mask[db.core_sample_indices_] = True
 
-unique_labels = set(filtered_labels)
-for label in unique_labels:
-    plt.scatter([], [], c=scatter.cmap(scatter.norm(label)), label=f'Cluster {label}')
+colors = [plt.cm.Spectral(each) for each in np.linspace(0, 1, len(unique_labels))]
+for k, col in zip(unique_labels, colors):
+    if k == -1:
+        # Black used for noise.
+        col = [0, 0, 0, 1]
 
-plt.legend(title='Clusters')
+    class_member_mask = labels == k
+
+    xy = X[class_member_mask & core_samples_mask]
+    plt.plot(
+        xy[:, 0],
+        xy[:, 1],
+        "o",
+        markerfacecolor=tuple(col),
+        markeredgecolor="k",
+        markersize=14,
+    )
+
+    xy = X[class_member_mask & ~core_samples_mask]
+    plt.plot(
+        xy[:, 0],
+        xy[:, 1],
+        "o",
+        markerfacecolor=tuple(col),
+        markeredgecolor="k",
+        markersize=6,
+    )
+
+plt.title(f"Estimated number of clusters: {n_clusters_}")
 plt.show()
