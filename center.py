@@ -14,7 +14,7 @@ def getCenters(fp):
         fp (string): file path containing coordinates
 
     Returns:
-        string: contains centeroids of clusters
+        string: contains centeroids of clusters (rounded to 5 decimal places)
     """
     coordinates = []
 
@@ -48,7 +48,7 @@ def getCenters(fp):
         centroid = np.mean(cluster_points, axis=0)
         centroids.append(centroid)
 
-    return "\n".join(f"{centroid[0]}, {centroid[1]}" for centroid in centroids)
+    return "\n".join(f"{round(centroid[0], 5)}, {round(centroid[1], 5)}" for centroid in centroids)
 
 
 # optional visual display of plotting
