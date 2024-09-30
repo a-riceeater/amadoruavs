@@ -48,6 +48,8 @@ def getCenters(fp):
         centroid = np.mean(cluster_points, axis=0)
         centroids.append(centroid)
 
+    # display(labels, db, centroids, n_clusters_, X) unncomment if want to see a visual displayy
+
     return "\n".join(f"{round(centroid[0], 5)}, {round(centroid[1], 5)}" for centroid in centroids)
 
 

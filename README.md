@@ -1,3 +1,11 @@
 # Amador UAVS Software Application
 
-[How to Create a Dataset for Object Detection using the YOLO Labeling Format](https://docs.cogniflow.ai/en/article/how-to-create-a-dataset-for-object-detection-using-the-yolo-labeling-format-1tahk19/)
+My name is [Elijah Bantugan](https://elijahb.xyz), a 9th grade programmer. 
+
+## Project Structure
+
+**#1**: `center.py`
+
+**#2**: TBD
+
+**3**: `generator.py`, `train.py`, `val.py`, `vision.py`
