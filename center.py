@@ -9,6 +9,13 @@ import geopandas
 
 
 def getCenters(fp):
+    """
+    Args:
+        fp (string): file path containing coordinates
+
+    Returns:
+        string: contains centeroids of clusters
+    """
     coordinates = []
 
     with open(fp, 'r') as file:
