@@ -7,13 +7,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import geopandas
 
-path = 'with outliers.txt'
 
-
-def getCenters(path):
+def getCenters(fp):
     coordinates = []
 
-    with open(path, 'r') as file:
+    with open(fp, 'r') as file:
+        file.readline().strip()
+
         for line in file:
             lat, lon = map(float, line.strip().split())
             coordinates.append((lat, lon))
@@ -27,8 +27,8 @@ def getCenters(path):
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
     n_noise_ = list(labels).count(-1)
 
-    print("Estimated number of clusters: %d" % n_clusters_)
-    print("Estimated number of noise points: %d" % n_noise_)
+    # print("Estimated number of clusters: %d" % n_clusters_)
+    # print("Estimated number of noise points: %d" % n_noise_)
 
     centroids = []
 
@@ -41,15 +41,11 @@ def getCenters(path):
         centroid = np.mean(cluster_points, axis=0)
         centroids.append(centroid)
 
-        plt.plot(centroid[0], centroid[1], 'X', color='red', markersize=15, label=f'Centroid {k}')
-
-    plt.title(f"Estimated number of clusters: {n_clusters_}")
-    plt.show()
-
+    return "\n".join(f"{centroid[0]}, {centroid[1]}" for centroid in centroids)
 
 
 # optional visual display of plotting
-def display(labels, db):
+def display(labels, db, centroids, n_clusters, X):
     unique_labels = set(labels)
     core_samples_mask = np.zeros_like(labels, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
@@ -81,3 +77,13 @@ def display(labels, db):
             markeredgecolor=(1, 1, 1, 0),
             markersize=6,
         )
+
+
+    for centroid in centroids:
+        plt.plot(centroid[0], centroid[1], 'X', color='red', markersize=15, label=f'Centroid {k}')
+
+    plt.title(f"Estimated number of clusters: {n_clusters}")
+    plt.show()
+
+centers = getCenters('with outliers.txt')
+print(centers)
