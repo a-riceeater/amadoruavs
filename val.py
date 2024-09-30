@@ -6,5 +6,4 @@ from PIL import Image
 import numpy as np
 
 model = YOLO("./runs/detect/train/weights/best.pt")
-
-results = model(["input.png"])
+model.val()
