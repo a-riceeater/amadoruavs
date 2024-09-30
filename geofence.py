@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 n = 0 # geofence coordinates (amt)
 m = 0 # waypoint coordinates (amt)
@@ -17,3 +18,8 @@ with open("navigate.txt", "r") as file:
             lat, lon = map(float, line.strip().split())
             waypoints.append((lat, lon))
         
+x, y = zip(*fence)        
+x2, y2 = zip(*waypoints)
+plt.plot(y, x, linestyle='-', marker='o') 
+plt.plot(y2, x2, color='green', linestyle='-', marker='o')
+plt.show() 
