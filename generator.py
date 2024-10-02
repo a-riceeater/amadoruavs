@@ -181,11 +181,12 @@ def generateImage(shape, character, color, count, output):
     label.write(f"{shapeLetters[sc]} {x_center} {y_center} {width} {height}")
     label.close()
 
+imageAmount = 1000
 imageAmount = 2000
 start = time.time()
 for i in range(imageAmount):
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "train")
 
 
-for i in range(400): # generate 20% of the images created for validation
+for i in range(200): # generate 20% of the images created for validation
     generateImage(random.choice(shapes), random.choice(letters), (random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)), i, "val")
