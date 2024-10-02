@@ -1,8 +1,6 @@
 from ultralytics import YOLO
 import os
 
-model = YOLO("./model/yolov8m.yaml") #47990 z
+model = YOLO("./runs/detect/train5/weights/best.pt")
 
-results = model.train(data=os.path.join(os.getcwd(), "model", "model.yml"), epochs=2, imgsz=640, batch=1, val=True, pretrained=True) 
-
-# training start time 4:21PM 9/26/2024
+results = model.train(epochs=18, imgsz=640, batch=1, val=True) 
